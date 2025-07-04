@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "src\\PartsTracker.WebApi\\PartsTracker.WebApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\PartsTracker.UI\\partstracker.ui\\partstracker.ui.esproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

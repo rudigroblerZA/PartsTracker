@@ -1,11 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartsTracker", "PartsTracker\PartsTracker.csproj", "{8C558C89-0298-4C0B-A988-C98DCD389ADB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartsTracker.WebApi", "src\PartsTracker.WebApi\PartsTracker.WebApi.csproj", "{9E7B00EE-75E9-1E12-D454-CFB9845686CA}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C38C2B75-9CD2-42BA-98FB-E938FE409F13}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "partstracker.ui", "src\PartsTracker.UI\partstracker.ui\partstracker.ui.esproj", "{A1E960FA-3EF3-D477-2217-DA6A920D11FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{DED9C744-D84A-4156-BAC3-B4CC6EB0D9E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartsTracker.Tests", "src\PartsTracker.Tests\PartsTracker.Tests.csproj", "{1F22FC5E-13C7-F813-CB77-0DF474123986}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +23,34 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8C558C89-0298-4C0B-A988-C98DCD389ADB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C558C89-0298-4C0B-A988-C98DCD389ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C558C89-0298-4C0B-A988-C98DCD389ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C558C89-0298-4C0B-A988-C98DCD389ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E7B00EE-75E9-1E12-D454-CFB9845686CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E7B00EE-75E9-1E12-D454-CFB9845686CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E7B00EE-75E9-1E12-D454-CFB9845686CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E7B00EE-75E9-1E12-D454-CFB9845686CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1F22FC5E-13C7-F813-CB77-0DF474123986}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F22FC5E-13C7-F813-CB77-0DF474123986}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F22FC5E-13C7-F813-CB77-0DF474123986}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F22FC5E-13C7-F813-CB77-0DF474123986}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9E7B00EE-75E9-1E12-D454-CFB9845686CA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A1E960FA-3EF3-D477-2217-DA6A920D11FD} = {C38C2B75-9CD2-42BA-98FB-E938FE409F13}
+		{1F22FC5E-13C7-F813-CB77-0DF474123986} = {DED9C744-D84A-4156-BAC3-B4CC6EB0D9E5}
+	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3CA8152E-BB5C-4186-AD46-966D2B7F360E}
+		SolutionGuid = {DBFC8D40-92CF-41F9-8DCA-ACD4AD41394F}
 	EndGlobalSection
 EndGlobal

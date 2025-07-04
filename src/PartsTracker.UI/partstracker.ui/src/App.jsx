@@ -1,0 +1,265 @@
+import { useEffect, useState } from 'react';
+import './App.css';
+
+const server_url = 'http://localhost:8080';
+
+function App() {
+    const [parts, setParts] = useState();
+    const [showModal, setShowModal] = useState(false);
+    const [modalMode, setModalMode] = useState('add');
+    const [modalPart, setModalPart] = useState(null);
+    const [formData, setFormData] = useState({
+        partNumber: '',
+        description: '',
+        quantityOnHand: '',
+        locationCode: '',
+        lastStockTake: ''
+    });
+    const [formError, setFormError] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        populatePartsData();
+    }, []);
+
+    useEffect(() => {
+        if (showModal && modalMode === 'edit' && modalPart) {
+            setFormData({
+                partNumber: modalPart.partNumber || '',
+                description: modalPart.description || '',
+                quantityOnHand: modalPart.quantityOnHand || '',
+                locationCode: modalPart.locationCode || '',
+                lastStockTake: new Date(modalPart.lastStockTake).toISOString().split('T')[0] || new Date().toISOString().split('T')[0]
+            });
+        } else if (showModal && modalMode === 'add') {
+            setFormData({
+                partNumber: '',
+                description: '',
+                quantityOnHand: '',
+                locationCode: '',
+                lastStockTake: new Date().toISOString().split('T')[0]
+            });
+        }
+    }, [showModal, modalMode, modalPart]);
+
+    const contents = loading
+        ? <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
+            <div className="spinner-border text-primary" role="status">
+            </div>
+        </div>
+        : <>
+            <div class="table-responsive"><table className="table" aria-labelledby="tableLabel">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Stock Take</th>
+                        <th scope="col">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {parts.map(part =>
+                        <tr key={part.partNumber}>
+                            <td scope="row">{part.partNumber}</td>
+                            <td>{part.description}</td>
+                            <td>{part.quantityOnHand}</td>
+                            <td>{part.locationCode}</td>
+                            <td>{part.lastStockTake}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                    <button type="button" class="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
+                                    <button type="button" class="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table></div>
+        </>;
+
+
+    function handleAddClick() {
+        setModalMode('add');
+        setModalPart(null);
+        setShowModal(true);
+    }
+
+    async function handleRemoveClick(partNumber) {
+        const response = await fetch(`${server_url}/api/parts/${partNumber}`, {
+            method: 'DELETE'
+        });
+        if (response.ok) {
+            await populatePartsData();
+        } else {
+            alert('Failed to delete part.');
+        }
+    }
+
+    function handleEditClick(partNumber) {
+        const part = parts.find(p => p.partNumber === partNumber);
+        setModalMode('edit');
+        setModalPart(part);
+        setShowModal(true);
+    }
+
+    function handleModalClose() {
+        setShowModal(false);
+    }
+
+    function handleFormChange(e) {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
+    function handleFormClear() {
+        setFormData({
+            partNumber: '',
+            description: '',
+            quantityOnHand: '',
+            locationCode: '',
+        });
+        setFormError('');
+    }
+
+    async function handleModalSave() {
+        if (!formData.partNumber.trim()) {
+            setFormError('Part Number is required.');
+            return;
+        }
+        if (!formData.description.trim()) {
+            setFormError('Description is required.');
+            return;
+        }
+        if (formData.quantityOnHand === '' || formData.quantityOnHand === null) {
+            setFormError('Quantity On Hand is required.');
+            return;
+        }
+        setFormError('');
+        let response;
+        if (modalMode === 'add') {
+            let now = new Date();
+            response = await fetch(`${server_url}/api/parts`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    lastStockTake: now.toISOString(),
+                    quantityOnHand: Number(formData.quantityOnHand)
+                })
+            });
+        } else if (modalMode === 'edit') {
+            let now = new Date();
+            response = await fetch(`${server_url}/api/parts/${formData.partNumber}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    lastStockTake: now.toISOString(),
+                    quantityOnHand: Number(formData.quantityOnHand)
+                })
+            });
+        }
+        if (response && response.ok) {
+            setShowModal(false);
+            await populatePartsData();
+        } else {
+            setFormError('Failed to save changes.');
+        }
+    }
+
+    function isFormValid() {
+        return (
+            formData.partNumber.trim() !== '' &&
+            formData.description.trim() !== '' &&
+            formData.quantityOnHand !== '' &&
+            formData.quantityOnHand !== null
+        );
+    }
+
+    const modalTitle = modalMode === 'add' ? 'Add Part' : 'Edit Part';
+    const modalBody = (
+        <form>
+            {formError && <div className="alert alert-danger">{formError}</div>}
+            <div className="form-group">
+                <label>Part Number</label>
+                <input type="text" className="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
+            </div>
+            <div className="form-group">
+                <label>Description</label>
+                <input type="text" className="form-control" name="description" value={formData.description} onChange={handleFormChange} />
+            </div>
+            <div className="form-group">
+                <label>Quantity On Hand</label>
+                <input type="number" className="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
+            </div>
+            <div className="form-group">
+                <label>Location</label>
+                <input type="text" className="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
+            </div>        
+        </form>
+    );
+
+    function handlePageChange(page) {
+        setCurrentPage(page);
+    }
+
+    return (
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {contents}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="position-fixed bottom-0 end-0 mb-3 me-3">
+                        <button type="button" class="btn btn-primary" onClick={handleAddClick}>Add</button>
+                    </div>
+                </div>
+            </div>
+            {showModal && (
+                <div className="modal show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">{modalTitle}</h5>
+                                <button type="button" className="close" onClick={handleModalClose}>&times;</button>
+                            </div>
+                            <div className="modal-body">
+                                {modalBody}
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
+                                <button type="button" className="btn btn-warning" onClick={handleFormClear}>Clear</button>
+                                <button type="button" className="btn btn-primary" onClick={handleModalSave} disabled={!isFormValid()}>Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+
+    async function populatePartsData() {
+        console.log('loading...');
+        setLoading(true);
+        const response = await fetch(`${server_url}/api/parts`);
+        if (response.ok) {
+            const data = await response.json();
+            data.map(_ => {
+                //_.lastStockTakeDate = new Date(_.lastStockTake);
+                //_.lastStockTake = _.lastStockTake ? new Date(_.lastStockTake).toISOString().split('T')[0] : new Date(_.lastStockTake).toISOString().split('T')[0];
+                return _;
+            })
+            setParts(data);
+        }
+        setLoading(false);
+    }
+}
+
+export default App

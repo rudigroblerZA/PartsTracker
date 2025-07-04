@@ -3,8 +3,12 @@
     "Docker Compose": {
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "partstracker.webapi",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
       "serviceActions": {
-        "partstracker": "StartDebugging"
+        "partstracker.webapi": "StartDebugging",
+        "postgres": "StartWithoutDebugging"
       }
     }
   }

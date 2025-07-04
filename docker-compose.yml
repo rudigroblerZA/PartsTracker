@@ -1,15 +1,30 @@
 services:
-
-  partstracker:
-    image: ${DOCKER_REGISTRY-}partstracker
+  partstracker.webapi:
+    image: ${DOCKER_REGISTRY-}partstrackerwebapi
     build:
-      context: .
-      dockerfile: PartsTracker/Dockerfile
+      context: src/PartsTracker.WebApi
+      dockerfile: Dockerfile  
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "0.0.0.0:8080:8080"
     depends_on:
         postgres:
           condition: service_healthy
+      
+  partstracker.ui:
+    image: ${DOCKER_REGISTRY-}partstrackerui
+    build:
+      context: src/PartsTracker.UI/partstracker.ui
+      dockerfile: Dockerfile  
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8081
+    ports:
+      - "0.0.0.0:8081:8081"
 
-  postgres:
+  postgres:    
     image: postgres:15
     container_name: postgres
     restart: always
@@ -18,7 +33,7 @@ services:
       POSTGRES_PASSWORD: supersecret
       POSTGRES_DB: InventoryDb
     ports:
-      - "0.0.0.0:5432:5432"
+      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:

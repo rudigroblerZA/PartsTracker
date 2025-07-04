@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36203.30 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartsTracker.WebApi", "PartsTracker.WebApi.csproj", "{EECE3C18-ADC6-48E1-B455-781E114C4C0C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EECE3C18-ADC6-48E1-B455-781E114C4C0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EECE3C18-ADC6-48E1-B455-781E114C4C0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EECE3C18-ADC6-48E1-B455-781E114C4C0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EECE3C18-ADC6-48E1-B455-781E114C4C0C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8D569070-5BC2-40FD-97D5-E76532C436C0}
+	EndGlobalSection
+EndGlobal

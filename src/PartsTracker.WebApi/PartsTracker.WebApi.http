@@ -1,0 +1,6 @@
+@PartsTracker.WebApi_HostAddress = http://localhost:5296
+
+GET {{PartsTracker.WebApi_HostAddress}}/api/parts/
+Accept: application/json
+
+###
