@@ -38,4 +38,10 @@ public class Part
     /// </summary>
     public DateTime LastStockTake { get; set; } = DateTime.UtcNow;
 
+    /// <summary>
+    /// Gets or sets the name of the part.
+    /// </summary>
+    [Required]
+    [MaxLength(100)]
+    public string Name { get; set; } = string.Empty;
 }

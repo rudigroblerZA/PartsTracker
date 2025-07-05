@@ -50,16 +50,39 @@ public class PartsRepository : IPartsRepository
     public async Task<IEnumerable<Part>> FindAsync(Expression<Func<Part, bool>> predicate, CancellationToken cancellationToken = default) => await _context.Parts.Where(predicate).ToListAsync(cancellationToken);
 
     /// <summary>
+    /// Validates a Part entity for business rules.
+    /// </summary>
+    /// <param name="entity">The <see cref="Part"/> entity to validate.</param>
+    private void ValidatePart(Part entity)
+    {
+        if (entity == null)
+            throw new ArgumentNullException(nameof(entity));
+        if (string.IsNullOrWhiteSpace(entity.Name))
+            throw new ArgumentException("Part Name is required.", nameof(entity));
+        if (entity.QuantityOnHand < 0)
+            throw new ArgumentException("QuantityOnHand cannot be negative.", nameof(entity));
+        // Add more required field checks as needed
+    }
+
+    /// <summary>
     /// Adds a new part to the context.
     /// </summary>
     /// <param name="entity">The <see cref="Part"/> entity to add.</param>
-    public async Task AddAsync(Part entity) => await _context.Parts.AddAsync(entity);
+    public async Task AddAsync(Part entity)
+    {
+        ValidatePart(entity);
+        await _context.Parts.AddAsync(entity);
+    }
 
     /// <summary>
     /// Updates an existing part in the context.
     /// </summary>
     /// <param name="entity">The <see cref="Part"/> entity to update.</param>
-    public void Update(Part entity) => _context.Parts.Update(entity);
+    public void Update(Part entity)
+    {
+        ValidatePart(entity);
+        _context.Parts.Update(entity);
+    }
 
     /// <summary>
     /// Removes a part from the context.

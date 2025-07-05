@@ -1,5 +1,8 @@
 
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PartsTracker.Server.Data;
 using PartsTracker.WebApi.Data;
 using PartsTracker.WebApi.Infrastricture;
@@ -56,15 +59,27 @@ public class Program
             }
         });
 
-        builder.Services.AddDbContextPool<InventoryDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection")));
+        var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
-        builder.Services.AddHealthChecks().AddDbContextCheck<InventoryDbContext>();
+        builder.Services.AddDbContextPool<InventoryDbContext>(options => options.UseNpgsql(connectionString));
+
+        builder.Services.AddHealthChecks()
+           .AddDbContextCheck<InventoryDbContext>()
+           .AddNpgSql(
+               connectionString,
+               name: "Postgres Database",
+               failureStatus: HealthStatus.Unhealthy,
+               tags: new[] { "db", "postgres" }
+           );
 
         builder.Services.AddScoped<IPartsRepository, PartsRepository>();
 
         var app = builder.Build();
 
-        app.MapHealthChecks("/health");
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+        });
 
         app.UseCors("AllowAllOrigins");
 
