@@ -1,0 +1,15 @@
+è
+ÉC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\obj\Debug\net8.0\PartsTracker.WebApi.MvcApplicationPartsAssemblyInfo.csutf-8{
+pC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\obj\Debug\net8.0\PartsTracker.WebApi.AssemblyInfo.csutf-8Ü
+{C:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\obj\Debug\net8.0\.NETCoreApp,Version=v8.0.AssemblyAttributes.csutf-8}
+rC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\obj\Debug\net8.0\PartsTracker.WebApi.GlobalUsings.g.csutf-8O
+FC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Program.csutf-8S
+JC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Models\Part.csutf-8t
+iC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Migrations\InventoryDbContextModelSnapshot.csutf-8z
+oC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Migrations\20250704211531_InitialCreate.Designer.csutf-8o
+fC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Migrations\20250704211531_InitialCreate.csutf-8f
+]C:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Infrastricture\PartsRepository.csutf-8g
+^C:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Infrastricture\IPartsRepository.csutf-8_
+VC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Data\InventoryDbContext.csutf-8Z
+QC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Data\DbInitializer.csutf-8c
+ZC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\Controllers\PartsController.csutf-8

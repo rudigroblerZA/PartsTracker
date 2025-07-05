@@ -39,9 +39,9 @@ jobs:
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
       - name: Build and analyze
         env:
-          SONAR_TOKEN: ecfbd6bdf01790fca9265c99cc921092cab04dbf
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"rudigroblerZA_PartsTracker" /o:"rudigroblerza" /d:sonar.token="ecfbd6bdf01790fca9265c99cc921092cab04dbf" /d:sonar.host.url="https://sonarcloud.io"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"rudigroblerZA_PartsTracker" /o:"rudigroblerza" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build .\PartsTracker.sln
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="ecfbd6bdf01790fca9265c99cc921092cab04dbf"
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

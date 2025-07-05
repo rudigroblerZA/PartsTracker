@@ -1,0 +1,7 @@
+organization=rudigroblerza
+projectKey=rudigroblerZA_PartsTracker
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.65231
+dashboardUrl=https://sonarcloud.io/dashboard?id=rudigroblerZA_PartsTracker
+ceTaskId=AZfX8vu4aKNBxIxE_F9A
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZfX8vu4aKNBxIxE_F9A

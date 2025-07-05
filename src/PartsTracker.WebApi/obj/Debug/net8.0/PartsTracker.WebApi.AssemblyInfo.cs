@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PartsTracker.WebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23057c027bc30077340557995a3bd5b05812ebd0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+912be0b941944eaead367216173c046723efde7f")]
 [assembly: System.Reflection.AssemblyProductAttribute("PartsTracker.WebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PartsTracker.WebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

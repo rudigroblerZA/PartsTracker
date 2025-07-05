@@ -1,0 +1,27 @@
+Product projects
+---------------------------------------
+C:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.UI\partstracker.ui\partstracker.ui.esproj
+C:\Users\rudig\Desktop\PartsTracker\docker-compose.dcproj
+C:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\PartsTracker.WebApi.csproj
+
+
+Test projects
+---------------------------------------
+C:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.Tests\PartsTracker.Tests.csproj
+
+
+Invalid projects
+---------------------------------------
+{none}
+
+
+Skipped projects
+---------------------------------------
+{none}
+
+
+Excluded projects
+---------------------------------------
+{none}
+
+
