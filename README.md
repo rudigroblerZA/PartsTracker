@@ -11,7 +11,7 @@ A thin vertical slice of a PartsTracker platform designed to track inventory par
 - ✅ Basic frontend built in React/Angular (your choice)
 - ❌ Server-side validation with clear error feedback
 - ❌ Infrastructure-as-Code via Terraform (plan-only)
-- ❌ CI via GitHub Actions (build, test, dockerize)
+- ❌ CI via GitHub Actions (build, test, dockerize) -> Sonar
 
 ---
 
