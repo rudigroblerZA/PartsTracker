@@ -251,11 +251,6 @@ function App() {
         const response = await fetch(`${server_url}/api/parts`);
         if (response.ok) {
             const data = await response.json();
-            data.map(_ => {
-                //_.lastStockTakeDate = new Date(_.lastStockTake);
-                //_.lastStockTake = _.lastStockTake ? new Date(_.lastStockTake).toISOString().split('T')[0] : new Date(_.lastStockTake).toISOString().split('T')[0];
-                return _;
-            })
             setParts(data);
         }
         setLoading(false);

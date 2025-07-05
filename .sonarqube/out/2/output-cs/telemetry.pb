@@ -1,1 +1,0 @@
-lRVC:\Users\rudig\Desktop\PartsTracker\src\PartsTracker.WebApi\PartsTracker.WebApi.csproj¢net8.0òCSharp12

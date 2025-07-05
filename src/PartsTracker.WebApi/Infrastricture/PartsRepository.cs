@@ -72,7 +72,7 @@ public class PartsRepository : IPartsRepository
     /// </summary>
     /// <param name="tracking">Enable tracking</param>
     /// <returns>An <see cref="IQueryable{Part}"/> that can be used for further querying.</returns>
-    public IQueryable<Part> Query(bool tracking = true) => tracking ? _context.Parts : _context.Parts.AsNoTracking();
+    public IQueryable<Part> Query(bool tracking) => tracking ? _context.Parts : _context.Parts.AsNoTracking();
 
     /// <summary>
     /// Adds multiple parts to the context.

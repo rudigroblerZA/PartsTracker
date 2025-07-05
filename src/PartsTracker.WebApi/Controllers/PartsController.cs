@@ -131,7 +131,6 @@ public class PartsController : ControllerBase
         existing.QuantityOnHand = part.QuantityOnHand;
         existing.LocationCode = part.LocationCode;
         existing.LastStockTake = DateTime.UtcNow;
-        //existing.LastStockTake = part.LastStockTake;
 
         _repository.Update(existing);
         await _repository.SaveChangesAsync();

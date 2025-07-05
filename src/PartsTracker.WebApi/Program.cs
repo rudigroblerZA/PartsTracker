@@ -69,7 +69,7 @@ public class Program
         {
             using var scope = app.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
-            db.Database.Migrate();
+            await db.Database.MigrateAsync();
             await DbInitializer.SeedAsync(db);
         }
         catch (Exception ex)
@@ -79,14 +79,12 @@ public class Program
             throw;
         }
 
-        //app.UseHttpsRedirection();
-
         app.UseAuthorization();
 
         app.MapControllers();
 
         app.MapFallbackToFile("/index.html");
 
-        app.Run();
+        await app.RunAsync();
     }
 }
