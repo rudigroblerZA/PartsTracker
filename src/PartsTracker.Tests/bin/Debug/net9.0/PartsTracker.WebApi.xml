@@ -1,0 +1,281 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PartsTracker.WebApi</name>
+    </assembly>
+    <members>
+        <member name="T:PartsTracker.WebApi.Controllers.PartsController">
+            <summary>
+            Controller for managing parts in the inventory system.
+            </summary>
+        </member>
+        <member name="M:PartsTracker.WebApi.Controllers.PartsController.#ctor(PartsTracker.WebApi.Infrastricture.IPartsRepository,Microsoft.Extensions.Logging.ILogger{PartsTracker.WebApi.Controllers.PartsController})">
+            <summary>
+            Initializes a new instance of the <see cref="T:PartsTracker.WebApi.Controllers.PartsController"/> class.
+            </summary>
+            <param name="repository">The repository used to access part data.</param>
+            <param name="logger">Logger</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Controllers.PartsController.GetAll">
+            <summary>
+            Retrieves all parts from the inventory.
+            </summary>
+            <returns>
+            A list of <see cref="T:PartsTracker.WebApi.Models.Part"/> entities wrapped in an <see cref="T:Microsoft.AspNetCore.Mvc.ActionResult`1"/>.
+            Returns 200 OK with the list of parts.
+            </returns>
+            <remarks>
+            This endpoint returns all parts.
+            </remarks>
+        </member>
+        <member name="M:PartsTracker.WebApi.Controllers.PartsController.Get(System.String)">
+            <summary>
+            Retrieves a specific part by its part number.
+            </summary>
+            <param name="partNumber">The unique identifier of the part.</param>
+            <returns>
+            An <see cref="T:Microsoft.AspNetCore.Mvc.ActionResult`1"/> containing the requested <see cref="T:PartsTracker.WebApi.Models.Part"/> if found; 
+            otherwise, returns 404 Not Found if the part does not exist.
+            </returns>
+            <response code="200">Returns the part with the specified part number.</response>
+            <response code="404">If the part is not found.</response>
+        </member>
+        <member name="M:PartsTracker.WebApi.Controllers.PartsController.Create(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Creates a new part in the inventory.
+            </summary>
+            <param name="part">The <see cref="T:PartsTracker.WebApi.Models.Part"/> entity to create.</param>
+            <returns>
+            An <see cref="T:Microsoft.AspNetCore.Mvc.ActionResult`1"/> containing the created <see cref="T:PartsTracker.WebApi.Models.Part"/> with a 201 Created response, 
+            or a 409 Conflict if a part with the same part number already exists.
+            </returns>
+            <response code="201">The part was successfully created.</response>
+            <response code="409">A part with the given part number already exists.</response>
+        </member>
+        <member name="M:PartsTracker.WebApi.Controllers.PartsController.Update(System.String,PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Updates an existing part in the inventory.
+            </summary>
+            <param name="partNumber">The part number of the part to update (from the URL).</param>
+            <param name="part">The updated <see cref="T:PartsTracker.WebApi.Models.Part"/> object.</param>
+            <returns>
+            Returns 204 No Content if the update is successful, 
+            400 Bad Request if the URL part number does not match the request body,
+            or 404 Not Found if the part does not exist.
+            </returns>
+            <response code="204">The part was successfully updated.</response>
+            <response code="400">The part number in the URL does not match the request body.</response>
+            <response code="404">The part was not found.</response>
+        </member>
+        <member name="M:PartsTracker.WebApi.Controllers.PartsController.Delete(System.String)">
+            <summary>
+            Deletes a part from the inventory.
+            </summary>
+            <param name="partNumber">The part number of the part to delete.</param>
+            <returns>
+            Returns 204 No Content if the deletion is successful, 
+            or 404 Not Found if the part does not exist.
+            </returns>
+            <response code="204">The part was successfully deleted.</response>
+            <response code="404">The part was not found.</response>
+        </member>
+        <member name="T:PartsTracker.WebApi.Data.DbInitializer">
+            <summary>
+            Initializes the database with sample data.
+            </summary>
+        </member>
+        <member name="M:PartsTracker.WebApi.Data.DbInitializer.SeedAsync(PartsTracker.Server.Data.InventoryDbContext)">
+            <summary>
+            Seed at least three sample parts. 
+            </summary>
+        </member>
+        <member name="T:PartsTracker.WebApi.Infrastricture.IPartsRepository">
+            <summary>
+            Defines a contract for repository operations on <see cref="T:PartsTracker.WebApi.Models.Part"/> entities.
+            </summary>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.AddAsync(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Asynchronously adds a single <see cref="T:PartsTracker.WebApi.Models.Part"/> to the context.
+            </summary>
+            <param name="entity">The part entity to add.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.FindAsync(System.Linq.Expressions.Expression{System.Func{PartsTracker.WebApi.Models.Part,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously finds parts matching the specified condition.
+            </summary>
+            <param name="predicate">The expression used to filter parts.</param>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A collection of parts that satisfy the condition.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously retrieves all parts from the data store.
+            </summary>
+            <param name="cancellationToken">A token to cancel the operation.</param>
+            <returns>A collection of all <see cref="T:PartsTracker.WebApi.Models.Part"/> entities.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.GetByIdAsync(System.Object[])">
+            <summary>
+            Asynchronously retrieves a part by its primary key values.
+            </summary>
+            <param name="keyValues">The key values that identify the part.</param>
+            <returns>The matching part, or <c>null</c> if not found.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.Query(System.Boolean)">
+            <summary>
+            Returns a queryable collection of parts for further querying.
+            </summary>
+            <param name="tracking">If <c>true</c>, enables change tracking.</param>
+            <returns>An <see cref="T:System.Linq.IQueryable`1"/> for querying parts.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.Remove(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Removes a single part from the context.
+            </summary>
+            <param name="entity">The part entity to remove.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.AddRangeAsync(System.Collections.Generic.IEnumerable{PartsTracker.WebApi.Models.Part})">
+            <summary>
+            Asynchronously adds multiple parts to the context.
+            </summary>
+            <param name="parts">The collection of parts to add.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.RemoveRange(System.Collections.Generic.IEnumerable{PartsTracker.WebApi.Models.Part})">
+            <summary>
+            Removes multiple parts from the context.
+            </summary>
+            <param name="parts">The collection of parts to remove.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.SaveChangesAsync">
+            <summary>
+            Asynchronously saves all changes made in the context to the data store.
+            </summary>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.IPartsRepository.Update(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Updates the specified part in the context.
+            </summary>
+            <param name="entity">The part entity with updated values.</param>
+        </member>
+        <member name="T:PartsTracker.WebApi.Infrastricture.PartsRepository">
+            <summary>
+            A generic repository implementation for managing <see cref="T:PartsTracker.WebApi.Models.Part"/> entities using Entity Framework Core.
+            </summary>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.#ctor(PartsTracker.Server.Data.InventoryDbContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:PartsTracker.WebApi.Infrastricture.PartsRepository"/> class.
+            </summary>
+            <param name="context">The database context to use for data access.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.GetByIdAsync(System.Object[])">
+            <summary>
+            Gets a part by its primary key.
+            </summary>
+            <param name="keyValues">The values of the primary key for the part.</param>
+            <returns>The matching <see cref="T:PartsTracker.WebApi.Models.Part"/> if found; otherwise, <c>null</c>.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.GetAllAsync(System.Threading.CancellationToken)">
+            <summary>
+            Gets all parts in the database.
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A collection of all <see cref="T:PartsTracker.WebApi.Models.Part"/> entities.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.FindAsync(System.Linq.Expressions.Expression{System.Func{PartsTracker.WebApi.Models.Part,System.Boolean}},System.Threading.CancellationToken)">
+            <summary>
+            Finds parts that match a specified condition.
+            </summary>
+            <param name="predicate">The expression used to filter parts.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>A collection of <see cref="T:PartsTracker.WebApi.Models.Part"/> entities that match the condition.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.AddAsync(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Adds a new part to the context.
+            </summary>
+            <param name="entity">The <see cref="T:PartsTracker.WebApi.Models.Part"/> entity to add.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.Update(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Updates an existing part in the context.
+            </summary>
+            <param name="entity">The <see cref="T:PartsTracker.WebApi.Models.Part"/> entity to update.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.Remove(PartsTracker.WebApi.Models.Part)">
+            <summary>
+            Removes a part from the context.
+            </summary>
+            <param name="entity">The <see cref="T:PartsTracker.WebApi.Models.Part"/> entity to remove.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.Query(System.Boolean)">
+            <summary>
+            Returns a queryable collection of parts.
+            </summary>
+            <param name="tracking">Enable tracking</param>
+            <returns>An <see cref="T:System.Linq.IQueryable`1"/> that can be used for further querying.</returns>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.AddRangeAsync(System.Collections.Generic.IEnumerable{PartsTracker.WebApi.Models.Part})">
+            <summary>
+            Adds multiple parts to the context.
+            </summary>
+            <param name="parts">A collection of parts to add.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.RemoveRange(System.Collections.Generic.IEnumerable{PartsTracker.WebApi.Models.Part})">
+            <summary>
+            Removes multiple parts from the context.
+            </summary>
+            <param name="parts">A collection of parts to remove.</param>
+        </member>
+        <member name="M:PartsTracker.WebApi.Infrastricture.PartsRepository.SaveChangesAsync">
+            <summary>
+            Persists all changes made in the context to the database.
+            </summary>
+            <returns>The number of state entries written to the database.</returns>
+        </member>
+        <member name="T:PartsTracker.WebApi.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:PartsTracker.WebApi.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PartsTracker.WebApi.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:PartsTracker.WebApi.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:PartsTracker.WebApi.Models.Part">
+            <summary>
+            Represents an inventory part in the system.
+            </summary>
+        </member>
+        <member name="P:PartsTracker.WebApi.Models.Part.PartNumber">
+            <summary>
+            Gets or sets the unique identifier for the part.
+            </summary>
+        </member>
+        <member name="P:PartsTracker.WebApi.Models.Part.Description">
+            <summary>
+            Gets or sets the description of the part.
+            </summary>
+        </member>
+        <member name="P:PartsTracker.WebApi.Models.Part.QuantityOnHand">
+            <summary>
+            Gets or sets the quantity of the part currently on hand.
+            </summary>
+        </member>
+        <member name="P:PartsTracker.WebApi.Models.Part.LocationCode">
+            <summary>
+            Gets or sets the location code where the part is stored.
+            </summary>
+        </member>
+        <member name="P:PartsTracker.WebApi.Models.Part.LastStockTake">
+            <summary>
+            Gets or sets the date and time of the last stock take.
+            </summary>
+        </member>
+    </members>
+</doc>
