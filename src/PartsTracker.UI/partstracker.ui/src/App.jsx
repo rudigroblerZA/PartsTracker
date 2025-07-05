@@ -184,22 +184,22 @@ function App() {
         <form>
             {formError && <div className="alert alert-danger">{formError}</div>}
             <div className="form-group">
-                <label>Part Number
+                <label>Part Number:{' '}
                     <input type="text" className="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
                 </label>
             </div>
             <div className="form-group">
-                <label>Description
+                <label>Description:{' '}
                     <input type="text" className="form-control" name="description" value={formData.description} onChange={handleFormChange} />
                 </label>
             </div>
             <div className="form-group">
-                <label>Quantity On Hand
+                <label>Quantity On Hand:{' '}
                     <input type="number" className="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
                 </label>
             </div>
             <div className="form-group">
-                <label>Location
+                <label>Location:{' '}
                     <input type="text" className="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
                 </label>
             </div>        
