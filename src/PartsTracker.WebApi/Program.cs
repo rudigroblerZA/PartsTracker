@@ -6,8 +6,24 @@ using PartsTracker.WebApi.Infrastricture;
 
 namespace PartsTracker.WebApi;
 
+/// <summary>
+/// Main entry point for the PartsTracker Web API application.
+/// </summary>
 public class Program
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Program"/> class.
+    /// </summary>
+    protected Program()
+    {
+        
+    }
+
+    /// <summary>
+    /// Main method for the PartsTracker Web API application.
+    /// </summary>
+    /// <param name="args">Command line arguments</param>
+    /// <returns>Once all tasks awaited.</returns>
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +42,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new() 
+            c.SwaggerDoc("v1", new()
             {
                 Version = "v1",
                 Title = "PartsTracker",
@@ -76,7 +92,6 @@ public class Program
         {
             var logger = app.Services.GetRequiredService<ILogger<Program>>();
             logger.LogError(ex, "An error occurred during migration or seeding.");
-            throw;
         }
 
         app.UseAuthorization();

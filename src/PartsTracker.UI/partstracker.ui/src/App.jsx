@@ -16,8 +16,6 @@ function App() {
         lastStockTake: ''
     });
     const [formError, setFormError] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -186,27 +184,27 @@ function App() {
         <form>
             {formError && <div className="alert alert-danger">{formError}</div>}
             <div className="form-group">
-                <label>Part Number</label>
-                <input type="text" className="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
+                <label>Part Number
+                    <input type="text" className="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
+                </label>
             </div>
             <div className="form-group">
-                <label>Description</label>
-                <input type="text" className="form-control" name="description" value={formData.description} onChange={handleFormChange} />
+                <label>Description
+                    <input type="text" className="form-control" name="description" value={formData.description} onChange={handleFormChange} />
+                </label>
             </div>
             <div className="form-group">
-                <label>Quantity On Hand</label>
-                <input type="number" className="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
+                <label>Quantity On Hand
+                    <input type="number" className="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
+                </label>
             </div>
             <div className="form-group">
-                <label>Location</label>
-                <input type="text" className="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
+                <label>Location
+                    <input type="text" className="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
+                </label>
             </div>        
         </form>
     );
-
-    function handlePageChange(page) {
-        setCurrentPage(page);
-    }
 
     return (
         <div class="container">
@@ -246,7 +244,6 @@ function App() {
     );
 
     async function populatePartsData() {
-        console.log('loading...');
         setLoading(true);
         const response = await fetch(`${server_url}/api/parts`);
         if (response.ok) {

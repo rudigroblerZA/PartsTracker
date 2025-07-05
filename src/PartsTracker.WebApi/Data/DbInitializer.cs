@@ -15,8 +15,8 @@ public static class DbInitializer
     {
         if (!context.Parts.Any())
         {
-            context.Parts.AddRange(new[]
-            {
+            context.Parts.AddRange(
+            [
                 new Part
                 {
                     PartNumber = "A1643200725",
@@ -41,7 +41,7 @@ public static class DbInitializer
                     LocationCode = "A1",
                     LastStockTake = DateTime.UtcNow,
                 }
-            });
+            ]);
 
             await context.SaveChangesAsync();
         }
