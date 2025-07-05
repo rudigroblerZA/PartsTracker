@@ -24,7 +24,7 @@ public class PartsRepositoryTests
     {
         // Arrange
         var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "ABC123", Name = "Test", Description = "Test part", QuantityOnHand = 5 };
+        var part = new Part { PartNumber = "ABC123", Description = "Test part", QuantityOnHand = 5 };
 
         // Act
         await repository.AddAsync(part);
@@ -43,8 +43,8 @@ public class PartsRepositoryTests
         var repository = CreateRepository(out var context);
         var parts = new List<Part>
         {
-            new Part { PartNumber = "A1", Name = "A1Name", QuantityOnHand = 1 },
-            new Part { PartNumber = "B2", Name = "B2Name", QuantityOnHand = 2 }
+            new Part { PartNumber = "A1", QuantityOnHand = 1 },
+            new Part { PartNumber = "B2", QuantityOnHand = 2 }
         };
         await repository.AddRangeAsync(parts);
         await repository.SaveChangesAsync();
@@ -61,7 +61,7 @@ public class PartsRepositoryTests
     {
         // Arrange
         var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "X99", Name = "ToRemove", QuantityOnHand = 10 };
+        var part = new Part { PartNumber = "X99", QuantityOnHand = 10 };
         await repository.AddAsync(part);
         await repository.SaveChangesAsync();
 
@@ -84,8 +84,8 @@ public class PartsRepositoryTests
         var repository = CreateRepository(out var context);
         await repository.AddRangeAsync(new[]
         {
-            new Part { PartNumber = "P1", Name = "P1Name", QuantityOnHand = 10 },
-            new Part { PartNumber = "P2", Name = "P2Name", QuantityOnHand = 0 }
+            new Part { PartNumber = "P1", QuantityOnHand = 10 },
+            new Part { PartNumber = "P2", QuantityOnHand = 0 }
         });
         await repository.SaveChangesAsync();
 
@@ -101,15 +101,7 @@ public class PartsRepositoryTests
     public async Task AddAsync_Should_Throw_When_QuantityOnHand_Negative()
     {
         var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "NEG1", Name = "Negative", QuantityOnHand = -1 };
-        await Assert.ThrowsAsync<ArgumentException>(() => repository.AddAsync(part));
-    }
-
-    [Fact]
-    public async Task AddAsync_Should_Throw_When_Name_Missing()
-    {
-        var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "NONAME", Name = "", QuantityOnHand = 1 };
+        var part = new Part { PartNumber = "NEG1", QuantityOnHand = -1 };
         await Assert.ThrowsAsync<ArgumentException>(() => repository.AddAsync(part));
     }
 
@@ -117,7 +109,7 @@ public class PartsRepositoryTests
     public async Task Update_Should_Throw_When_QuantityOnHand_Negative()
     {
         var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "UPDNEG", Name = "UpdateNeg", QuantityOnHand = 1 };
+        var part = new Part { PartNumber = "UPDNEG", QuantityOnHand = 1 };
         await repository.AddAsync(part);
         await repository.SaveChangesAsync();
         part.QuantityOnHand = -5;
@@ -128,11 +120,11 @@ public class PartsRepositoryTests
     public async Task AddAsync_Should_Succeed_With_Valid_Data()
     {
         var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "OK1", Name = "Valid", QuantityOnHand = 0 };
+        var part = new Part { PartNumber = "OK1", QuantityOnHand = 0 };
         await repository.AddAsync(part);
         await repository.SaveChangesAsync();
         var saved = await repository.GetByIdAsync("OK1");
         Assert.NotNull(saved);
-        Assert.Equal("Valid", saved?.Name);
+        Assert.Equal("Valid", saved?.PartNumber);
     }
 }

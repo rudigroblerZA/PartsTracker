@@ -57,11 +57,8 @@ public class PartsRepository : IPartsRepository
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
-        if (string.IsNullOrWhiteSpace(entity.Name))
-            throw new ArgumentException("Part Name is required.", nameof(entity));
         if (entity.QuantityOnHand < 0)
             throw new ArgumentException("QuantityOnHand cannot be negative.", nameof(entity));
-        // Add more required field checks as needed
     }
 
     /// <summary>
