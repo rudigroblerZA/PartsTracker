@@ -43,5 +43,5 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"rudigroblerZA_PartsTracker" /o:"rudigroblerza" /d:sonar.token="ecfbd6bdf01790fca9265c99cc921092cab04dbf" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
+          dotnet build .\PartsTracker.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="ecfbd6bdf01790fca9265c99cc921092cab04dbf"
