@@ -48,7 +48,7 @@ function App() {
             </div>
         </div>
         : <>
-            <div class="table-responsive"><table className="table" aria-labelledby="tableLabel">
+            <div className="table-responsive"><table className="table" aria-labelledby="tableLabel">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -69,9 +69,9 @@ function App() {
                             <td>{part.locationCode}</td>
                             <td>{part.lastStockTake}</td>
                             <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                    <button type="button" class="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
-                                    <button type="button" class="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
+                                <div className="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                    <button type="button" className="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
+                                    <button type="button" className="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
