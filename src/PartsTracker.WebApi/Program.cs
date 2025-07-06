@@ -71,8 +71,7 @@ public class Program
            .AddNpgSql(
                _connectionString,
                name: "Postgres Database",
-               failureStatus: HealthStatus.Unhealthy,
-               tags: new[] { "db", "postgres" }
+               failureStatus: HealthStatus.Unhealthy
            );
 
         builder.Services.AddScoped<IPartsRepository, PartsRepository>();
