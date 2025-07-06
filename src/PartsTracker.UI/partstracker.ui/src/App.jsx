@@ -44,8 +44,7 @@ function App() {
 
     const contents = loading
         ? <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
-            <div className="spinner-border text-primary" role="output">
-            </div>
+            <div className="spinner-border text-primary"></div>
         </div>
         : <div className="table-responsive">
             <table className="table" aria-labelledby="tableLabel">
@@ -221,8 +220,8 @@ function App() {
                 </div>
             </div>
             {showModal && (
-                <div className="modal show d-block" tabIndex="-1" role="html" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <div className="modal-dialog" role="dialog">
+                <html className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <dialog className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">{modalTitle}</h5>
@@ -237,8 +236,8 @@ function App() {
                                 <button type="button" className="btn btn-primary" onClick={handleModalSave} disabled={!isFormValid()}>Save changes</button>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </dialog>
+                </html>
             )}
         </div>
     );
