@@ -70,8 +70,8 @@ function App() {
                             <td>{part.lastStockTake}</td>
                             <td>
                                 <div className="btn-group btn-group-sm" role="group" aria-label="Small button group">
-                                    <button type="button" className="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
-                                    <button type="button" className="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
+                                    <button type="button" className="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i className="bi bi-pen"></i></button>
+                                    <button type="button" className="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i className="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -207,16 +207,16 @@ function App() {
     );
 
     return (
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
                     {contents}
                 </div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="position-fixed bottom-0 end-0 mb-3 me-3">
-                        <button type="button" class="btn btn-primary" onClick={handleAddClick}>Add</button>
+            <div className="row">
+                <div className="col-12">
+                    <div className="position-fixed bottom-0 end-0 mb-3 me-3">
+                        <button type="button" className="btn btn-primary" onClick={handleAddClick}>Add</button>
                     </div>
                 </div>
             </div>
