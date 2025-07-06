@@ -24,6 +24,7 @@ bld/
 [Ll]ogs/
 
 .vs
+.sonarqube
 
 # .NET Core
 project.lock.json
