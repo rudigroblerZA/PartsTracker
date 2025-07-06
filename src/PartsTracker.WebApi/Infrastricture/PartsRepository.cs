@@ -55,8 +55,6 @@ public class PartsRepository : IPartsRepository
     /// <param name="entity">The <see cref="Part"/> entity to validate.</param>
     private static void ValidatePart(Part entity)
     {
-        if (entity == null)
-            throw new ArgumentNullException(nameof(entity));
         if (entity.QuantityOnHand < 0)
             throw new ArgumentException("QuantityOnHand cannot be negative.", nameof(entity));
     }

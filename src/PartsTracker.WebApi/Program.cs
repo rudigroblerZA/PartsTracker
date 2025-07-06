@@ -22,6 +22,8 @@ public class Program
         
     }
 
+    private static string _connectionString = String.Empty;
+
     /// <summary>
     /// Main method for the PartsTracker Web API application.
     /// </summary>
@@ -59,14 +61,15 @@ public class Program
             }
         });
 
-        var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
+        _connectionString = builder.Configuration.GetConnectionString("PostgresConnection") ??
+            throw new InvalidOperationException("Connection string 'PostgresConnection' not found.");
 
-        builder.Services.AddDbContextPool<InventoryDbContext>(options => options.UseNpgsql(connectionString));
+        builder.Services.AddDbContextPool<InventoryDbContext>(options => options.UseNpgsql(_connectionString));
 
         builder.Services.AddHealthChecks()
            .AddDbContextCheck<InventoryDbContext>()
            .AddNpgSql(
-               connectionString,
+               _connectionString,
                name: "Postgres Database",
                failureStatus: HealthStatus.Unhealthy,
                tags: new[] { "db", "postgres" }
