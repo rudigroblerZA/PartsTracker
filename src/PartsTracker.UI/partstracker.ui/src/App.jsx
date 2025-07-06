@@ -47,8 +47,8 @@ function App() {
             <div className="spinner-border text-primary" role="status">
             </div>
         </div>
-        : <>
-            <div className="table-responsive"><table className="table" aria-labelledby="tableLabel">
+        : <div className="table-responsive">
+            <table className="table" aria-labelledby="tableLabel">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -69,7 +69,7 @@ function App() {
                             <td>{part.locationCode}</td>
                             <td>{part.lastStockTake}</td>
                             <td>
-                                <div className="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                                <div className="btn-group btn-group-sm" role="optgroup" aria-label="Part Options">
                                     <button type="button" className="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i className="bi bi-pen"></i></button>
                                     <button type="button" className="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i className="bi bi-trash"></i></button>
                                 </div>
@@ -77,8 +77,8 @@ function App() {
                         </tr>
                     )}
                 </tbody>
-            </table></div>
-        </>;
+            </table>
+        </div>;
 
 
     function handleAddClick() {
@@ -221,8 +221,8 @@ function App() {
                 </div>
             </div>
             {showModal && (
-                <div className="modal show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <div className="modal-dialog" role="document">
+                <div className="modal show d-block" tabIndex="-1" role="html" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog" role="dialog">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">{modalTitle}</h5>
