@@ -53,7 +53,7 @@ public class PartsRepository : IPartsRepository
     /// Validates a Part entity for business rules.
     /// </summary>
     /// <param name="entity">The <see cref="Part"/> entity to validate.</param>
-    private void ValidatePart(Part entity)
+    private static void ValidatePart(Part entity)
     {
         if (entity == null)
             throw new ArgumentNullException(nameof(entity));
