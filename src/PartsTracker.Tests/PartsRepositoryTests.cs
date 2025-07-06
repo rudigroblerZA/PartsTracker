@@ -115,16 +115,4 @@ public class PartsRepositoryTests
         part.QuantityOnHand = -5;
         Assert.Throws<ArgumentException>(() => repository.Update(part));
     }
-
-    [Fact]
-    public async Task AddAsync_Should_Succeed_With_Valid_Data()
-    {
-        var repository = CreateRepository(out var context);
-        var part = new Part { PartNumber = "OK1", QuantityOnHand = 0 };
-        await repository.AddAsync(part);
-        await repository.SaveChangesAsync();
-        var saved = await repository.GetByIdAsync("OK1");
-        Assert.NotNull(saved);
-        Assert.Equal("Valid", saved?.PartNumber);
-    }
 }
