@@ -44,7 +44,7 @@ function App() {
 
     const contents = loading
         ? <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
-            <div className="spinner-border text-primary" role="status">
+            <div className="spinner-border text-primary" role="output">
             </div>
         </div>
         : <div className="table-responsive">
