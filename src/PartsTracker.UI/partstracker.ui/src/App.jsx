@@ -220,7 +220,7 @@ function App() {
                 </div>
             </div>
             {showModal && (
-                <html className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <html lang="en" className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
                     <dialog className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
