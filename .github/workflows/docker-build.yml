@@ -22,13 +22,6 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: src/PartsTracker.WebApi
-          file: Dockerfile
-          push: true
-          tags: rudigrobler/your-image:latest
       - name: Build and push Docker image (WebApi)
         uses: docker/build-push-action@v5
         with:
@@ -36,6 +29,7 @@ jobs:
           file: Dockerfile
           push: true
           tags: rudigrobler/partstrackerwebapi:latest
+
       - name: Build and push Docker image (UI)
         uses: docker/build-push-action@v5
         with:
