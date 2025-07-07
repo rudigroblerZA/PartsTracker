@@ -1,6 +1,6 @@
 services:
   partstracker.webapi:
-    image: ${DOCKER_REGISTRY-}partstrackerwebapi
+    image: rudigrobler/partstrackerwebapi
     build:
       context: src/PartsTracker.WebApi
       dockerfile: Dockerfile  
@@ -14,7 +14,7 @@ services:
           condition: service_healthy
       
   partstracker.ui:
-    image: ${DOCKER_REGISTRY-}partstrackerui
+    image: rudigrobler/partstrackerui
     build:
       context: src/PartsTracker.UI/partstracker.ui
       dockerfile: Dockerfile  
