@@ -68,7 +68,7 @@ function App() {
                             <td>{part.locationCode}</td>
                             <td>{part.lastStockTake}</td>
                             <td>
-                                <div class="btn-group btn-group-sm" role="optgroup" aria-label="PartOptions">
+                                <div class="btn-group btn-group-sm" role="group" aria-label="part_group">
                                     <button type="button" class="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
                                     <button type="button" class="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
                                 </div>
@@ -161,7 +161,7 @@ function App() {
                 })
             });
         }
-        if (response && response.ok) {
+        if (response?.ok) {
             setShowModal(false);
             await populatePartsData();
         } else {
@@ -220,7 +220,7 @@ function App() {
                 </div>
             </div>
             {showModal && (
-                <div role="dialog" class="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                <dialog class="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -237,7 +237,7 @@ function App() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </dialog>
             )}
         </div>
     );
