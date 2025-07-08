@@ -98,10 +98,12 @@ function App() {
     }
 
     function handleEditClick(partNumber) {
-        const part = parts.find(p => p.partNumber === partNumber);
-        setModalMode('edit');
-        setModalPart(part);
-        setShowModal(true);
+        if (parts) {
+            const part = parts.find(p => p.partNumber === partNumber);
+            setModalMode('edit');
+            setModalPart(part);
+            setShowModal(true);           
+        }
     }
 
     function handleModalClose() {
