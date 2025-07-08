@@ -43,11 +43,11 @@ function App() {
     }, [showModal, modalMode, modalPart]);
 
     const contents = loading
-        ? <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
-            <div className="spinner-border text-primary"></div>
+        ? <div class="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
+            <div class="spinner-border text-primary"></div>
         </div>
-        : <div className="table-responsive">
-            <table className="table" aria-labelledby="tableLabel">
+        : <div class="table-responsive">
+            <table class="table" aria-labelledby="tableLabel">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -68,9 +68,9 @@ function App() {
                             <td>{part.locationCode}</td>
                             <td>{part.lastStockTake}</td>
                             <td>
-                                <div className="btn-group btn-group-sm" role="optgroup" aria-label="Part Options">
-                                    <button type="button" className="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i className="bi bi-pen"></i></button>
-                                    <button type="button" className="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i className="bi bi-trash"></i></button>
+                                <div class="btn-group btn-group-sm" role="optgroup" aria-label="Part Options">
+                                    <button type="button" class="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
+                                    <button type="button" class="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -181,63 +181,63 @@ function App() {
     const modalTitle = modalMode === 'add' ? 'Add Part' : 'Edit Part';
     const modalBody = (
         <form>
-            {formError && <div className="alert alert-danger">{formError}</div>}
-            <div className="form-group">
+            {formError && <div class="alert alert-danger">{formError}</div>}
+            <div class="form-group">
                 <label>Part Number:{' '}
-                    <input type="text" className="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
+                    <input type="text" class="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
                 </label>
             </div>
-            <div className="form-group">
+            <div class="form-group">
                 <label>Description:{' '}
-                    <input type="text" className="form-control" name="description" value={formData.description} onChange={handleFormChange} />
+                    <input type="text" class="form-control" name="description" value={formData.description} onChange={handleFormChange} />
                 </label>
             </div>
-            <div className="form-group">
+            <div class="form-group">
                 <label>Quantity On Hand:{' '}
-                    <input type="number" className="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
+                    <input type="number" class="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
                 </label>
             </div>
-            <div className="form-group">
+            <div class="form-group">
                 <label>Location:{' '}
-                    <input type="text" className="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
+                    <input type="text" class="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
                 </label>
             </div>        
         </form>
     );
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
                     {contents}
                 </div>
             </div>
-            <div className="row">
-                <div className="col-12">
-                    <div className="position-fixed bottom-0 end-0 mb-3 me-3">
-                        <button type="button" className="btn btn-primary" onClick={handleAddClick}>Add</button>
+            <div class="row">
+                <div class="col-12">
+                    <div class="position-fixed bottom-0 end-0 mb-3 me-3">
+                        <button type="button" class="btn btn-primary" onClick={handleAddClick}>Add</button>
                     </div>
                 </div>
             </div>
             {showModal && (
-                <html lang="en" className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <dialog className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">{modalTitle}</h5>
-                                <button type="button" className="close" onClick={handleModalClose}>&times;</button>
+                <div tabindex="-1" role="dialog" class="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">{modalTitle}</h5>
+                                <button type="button" class="close" onClick={handleModalClose}>&times;</button>
                             </div>
-                            <div className="modal-body">
+                            <div class="modal-body">
                                 {modalBody}
                             </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
-                                <button type="button" className="btn btn-warning" onClick={handleFormClear}>Clear</button>
-                                <button type="button" className="btn btn-primary" onClick={handleModalSave} disabled={!isFormValid()}>Save changes</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onClick={handleModalClose}>Close</button>
+                                <button type="button" class="btn btn-warning" onClick={handleFormClear}>Clear</button>
+                                <button type="button" class="btn btn-primary" onClick={handleModalSave} disabled={!isFormValid()}>Save changes</button>
                             </div>
                         </div>
-                    </dialog>
-                </html>
+                    </div>
+                </div>
             )}
         </div>
     );
