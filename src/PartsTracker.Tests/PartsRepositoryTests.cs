@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Moq;
 using PartsTracker.Server.Data;
 using PartsTracker.WebApi.Infrastricture;
 using PartsTracker.WebApi.Models;
@@ -114,5 +115,70 @@ public class PartsRepositoryTests
         await repository.SaveChangesAsync();
         part.QuantityOnHand = -5;
         Assert.Throws<ArgumentException>(() => repository.Update(part));
+    }
+
+    [Fact]
+    public void RemoveRange_RemovesPartsFromContext()
+    {
+        // Arrange
+        var parts = new List<Part>
+            {
+                new Part { PartNumber = "P1", Description = "Part1", QuantityOnHand = 10 },
+                new Part { PartNumber = "P2", Description = "Part2", QuantityOnHand = 5 }
+            };
+
+        var mockSet = new Mock<DbSet<Part>>();
+        var mockContext = new Mock<InventoryDbContext>();
+        mockContext.Setup(m => m.Parts).Returns(mockSet.Object);
+
+        var repository = new PartsRepository(mockContext.Object);
+
+        // Act
+        repository.RemoveRange(parts);
+
+        // Assert
+        mockSet.Verify(m => m.RemoveRange(parts), Times.Once);
+    }
+
+    [Fact]
+    public void Query_WithTracking_ReturnsTrackedQueryable()
+    {
+        // Arrange
+        var mockSet = new Mock<DbSet<Part>>();
+        var mockContext = new Mock<InventoryDbContext>();
+        mockContext.Setup(m => m.Parts).Returns(mockSet.Object);
+
+        var repository = new PartsRepository(mockContext.Object);
+
+        // Act
+        var result = repository.Query(tracking: true);
+
+        // Assert
+        Assert.Same(mockSet.Object, result);
+    }
+
+    [Fact]
+    public void Query_WithoutTracking_ReturnsNoTrackingQueryable()
+    {
+        // Arrange
+        var mockSet = new Mock<DbSet<Part>>();
+        var mockContext = new Mock<InventoryDbContext>();
+        mockContext.Setup(m => m.Parts).Returns(mockSet.Object);
+
+        // Setup AsNoTracking to return a different IQueryable for test
+        var noTrackingQueryable = new List<Part>().AsQueryable();
+        mockSet.As<IQueryable<Part>>().Setup(m => m.Provider).Returns(noTrackingQueryable.Provider);
+        mockSet.As<IQueryable<Part>>().Setup(m => m.Expression).Returns(noTrackingQueryable.Expression);
+        mockSet.As<IQueryable<Part>>().Setup(m => m.ElementType).Returns(noTrackingQueryable.ElementType);
+        mockSet.As<IQueryable<Part>>().Setup(m => m.GetEnumerator()).Returns(noTrackingQueryable.GetEnumerator());
+        mockSet.Setup(m => m.AsNoTracking()).Returns(noTrackingQueryable);
+
+        var repository = new PartsRepository(mockContext.Object);
+
+        // Act
+        var result = repository.Query(tracking: false);
+
+        // Assert
+        Assert.Same(noTrackingQueryable, result);
     }
 }
