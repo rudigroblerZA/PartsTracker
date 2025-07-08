@@ -64,4 +64,57 @@ public class PartsControllerTests
         var result = await controller.Create(new Part { PartNumber = "P3" });
         Assert.IsType<ConflictObjectResult>(result.Result);
     }
+
+    [Fact]
+    public async Task Update_ReturnsNoContent_WhenSuccessful()
+    {
+        var repoMock = new Mock<IPartsRepository>();
+        var part = new Part { PartNumber = "P4", QuantityOnHand = 10 };
+        repoMock.Setup(r => r.GetByIdAsync("P4")).ReturnsAsync(part);
+        var controller = CreateController(repoMock);
+        var result = await controller.Update("P4", part);
+        Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsNotFound_WhenMissing()
+    {
+        var repoMock = new Mock<IPartsRepository>();
+        repoMock.Setup(r => r.GetByIdAsync("P5")).ReturnsAsync((Part?)null);
+        var controller = CreateController(repoMock);
+        var result = await controller.Update("P5", new Part { PartNumber = "P5" });
+        Assert.IsType<NotFoundResult>(result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsBadRequest_ForNegativeQuantity()
+    {
+        var repoMock = new Mock<IPartsRepository>();
+        var part = new Part { PartNumber = "P9", QuantityOnHand = -5 };
+        repoMock.Setup(r => r.GetByIdAsync("P9")).ReturnsAsync(part);
+        var controller = CreateController(repoMock);
+        var result = await controller.Update("P9", part);
+        Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async Task Delete_ReturnsNoContent_WhenSuccessful()
+    {
+        var repoMock = new Mock<IPartsRepository>();
+        var part = new Part { PartNumber = "P6" };
+        repoMock.Setup(r => r.GetByIdAsync("P6")).ReturnsAsync(part);
+        var controller = CreateController(repoMock);
+        var result = await controller.Delete("P6");
+        Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async Task Delete_ReturnsNotFound_WhenMissing()
+    {
+        var repoMock = new Mock<IPartsRepository>();
+        repoMock.Setup(r => r.GetByIdAsync("P7")).ReturnsAsync((Part?)null);
+        var controller = CreateController(repoMock);
+        var result = await controller.Delete("P7");
+        Assert.IsType<NotFoundResult>(result);
+    }
 }
