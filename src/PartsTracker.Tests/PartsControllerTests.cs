@@ -37,7 +37,7 @@ public class PartsControllerTests
     public async Task Get_ReturnsNotFound_WhenMissing()
     {
         var repoMock = new Mock<IPartsRepository>();
-        repoMock.Setup(r => r.GetByIdAsync("X")).ReturnsAsync((Part)null);
+        repoMock.Setup(r => r.GetByIdAsync("X")).ReturnsAsync(null as Part);
         var controller = CreateController(repoMock);
         var result = await controller.Get("X");
         Assert.IsType<NotFoundResult>(result.Result);
