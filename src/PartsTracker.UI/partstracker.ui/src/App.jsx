@@ -184,25 +184,22 @@ function App() {
     const modalBody = (
         <form>
             {formError && <div class="alert alert-danger">{formError}</div>}
+
             <div class="form-group">
-                <label>Part Number:{' '}
-                    <input type="text" class="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
-                </label>
+                <label for="partNumber">Part Number:</label>
+                <input type="text" class="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
             </div>
             <div class="form-group">
-                <label>Description:{' '}
-                    <input type="text" class="form-control" name="description" value={formData.description} onChange={handleFormChange} />
-                </label>
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" name="description" value={formData.description} onChange={handleFormChange} />                
             </div>
             <div class="form-group">
-                <label>Quantity On Hand:{' '}
-                    <input type="number" class="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
-                </label>
+                <label for="quantityOnHand">Quantity On Hand:</label>
+                <input type="number" class="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
             </div>
             <div class="form-group">
-                <label>Location:{' '}
-                    <input type="text" class="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />
-                </label>
+                <label for="locationCode">Location:</label>
+                <input type="text" class="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />                
             </div>        
         </form>
     );
