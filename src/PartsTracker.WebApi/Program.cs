@@ -19,7 +19,7 @@ public class Program
     /// </summary>
     protected Program()
     {
-        
+
     }
 
     private static string _connectionString = String.Empty;
