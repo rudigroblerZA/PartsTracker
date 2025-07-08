@@ -9,7 +9,7 @@ namespace PartsTracker.Tests;
 
 public class PartsControllerTests
 {
-    private static PartsController CreateController(Mock<IPartsRepository> repoMock = null)
+    private static PartsController CreateController(Mock<IPartsRepository> repoMock)
     {
         repoMock ??= new Mock<IPartsRepository>();
         var loggerMock = new Mock<ILogger<PartsController>>();

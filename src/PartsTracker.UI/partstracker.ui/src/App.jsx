@@ -60,7 +60,7 @@ function App() {
                     </tr>
                 </thead>
                 <tbody>
-                    {parts.map(part =>
+                    {parts?.map(part =>
                         <tr key={part.partNumber}>
                             <td scope="row">{part.partNumber}</td>
                             <td>{part.description}</td>
@@ -68,7 +68,7 @@ function App() {
                             <td>{part.locationCode}</td>
                             <td>{part.lastStockTake}</td>
                             <td>
-                                <div class="btn-group btn-group-sm" role="group" aria-label="part_group">
+                                <div class="btn-group btn-group-sm" role="rowgroup" aria-label="part_options_group">
                                     <button type="button" class="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i class="bi bi-pen"></i></button>
                                     <button type="button" class="btn btn-danger" onClick={() => handleRemoveClick(part.partNumber)}><i class="bi bi-trash"></i></button>
                                 </div>
