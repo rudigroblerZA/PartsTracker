@@ -1,14 +1,11 @@
 using PartsTracker.WebApi.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Xunit;
 
 namespace PartsTracker.Tests
 {
     public class PartAttributeValidationTests
     {
-        private IList<ValidationResult> ValidateModel(Part part)
+        private static List<ValidationResult> ValidateModel(Part part)
         {
             var context = new ValidationContext(part, null, null);
             var results = new List<ValidationResult>();
