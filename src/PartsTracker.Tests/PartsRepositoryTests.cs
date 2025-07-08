@@ -7,7 +7,7 @@ namespace PartsTracker.Tests;
 
 public class PartsRepositoryTests
 {
-    private static IPartsRepository CreateRepository(out InventoryDbContext context)
+    private static PartsRepository CreateRepository(out InventoryDbContext context)
     {
         var options = new DbContextOptionsBuilder<InventoryDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
