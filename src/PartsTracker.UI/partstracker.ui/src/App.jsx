@@ -157,9 +157,9 @@ function App() {
 
         if (errors.length > 0) {
             setFormError(
-                <ul className="mb-0">
-                    {errors.map((err) => <li>{err}</li>)}
-                </ul>
+                <div className="mb-0">
+                    {errors.map((err) => <div>{err}</div>)}
+                </div>
             );
             return;
         }
@@ -196,7 +196,7 @@ function App() {
             setFormError(data?.description || 'Part already exists.');
         } else {
             const data = await response.json().catch(() => ({}));
-            if (data && data.errors) {
+            if (data?.errors) {
                 Object.keys(data.errors).forEach(key => {
                     setFormError(prev => `${prev} - ${data.errors[key]}`);
                 });
@@ -261,7 +261,7 @@ function App() {
                     min="0"
                     required
                 />
-                {(formData.quantityOnHand === '' || isNaN(Number(formData.quantityOnHand))) && (
+                {(formData.quantityOnHand == '' || isNaN(Number(formData.quantityOnHand))) && (
                     <div className="invalid-feedback">Quantity On Hand is required and must be a number.</div>
                 )}
             </div>
