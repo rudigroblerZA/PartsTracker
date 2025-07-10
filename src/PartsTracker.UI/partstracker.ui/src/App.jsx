@@ -138,21 +138,27 @@ function App() {
 
     async function handleModalSave() {
         const errors = [];
+        
         if (!formData.partNumber.trim()) {
             errors.push('Part Number is required.');
         }
+        
         if (!formData.description.trim()) {
             errors.push('Description is required.');
         }
-        if (formData.quantityOnHand === '' || formData.quantityOnHand === null) {
+        
+        if (formData.quantityOnHand == '' || formData.quantityOnHand === null) {
             errors.push('Quantity On Hand is required.');
         } else if (isNaN(Number(formData.quantityOnHand))) {
             errors.push('Quantity On Hand must be a number.');
+        } else if (Number(formData.quantityOnHand) < 0) {
+            errors.push('Quantity On Hand cannot be negative.');
         }
+
         if (errors.length > 0) {
             setFormError(
                 <ul className="mb-0">
-                    {errors.map((err, i) => <li key={i}>{err}</li>)}
+                    {errors.map((err) => <li>{err}</li>)}
                 </ul>
             );
             return;
@@ -202,10 +208,10 @@ function App() {
 
     function isFormValid() {
         return (
-            formData.partNumber.trim() !== '' &&
-            formData.description.trim() !== '' &&
-            formData.quantityOnHand !== '' &&
-            formData.quantityOnHand !== null
+            formData.partNumber.trim() != '' &&
+            formData.description.trim() != '' &&
+            formData.quantityOnHand != '' &&
+            formData.quantityOnHand != null
         );
     }
 
@@ -248,7 +254,7 @@ function App() {
                 <label htmlFor="quantityOnHand">Quantity On Hand:</label>
                 <input
                     type="number"
-                    className={`form-control${formData.quantityOnHand === '' || isNaN(Number(formData.quantityOnHand)) ? ' is-invalid' : ''}`}
+                    className={`form-control${formData.quantityOnHand == '' || isNaN(Number(formData.quantityOnHand)) ? ' is-invalid' : ''}`}
                     name="quantityOnHand"
                     value={formData.quantityOnHand}
                     onChange={handleFormChange}
@@ -293,7 +299,7 @@ function App() {
             <div className="row">
                 <div className="col-12">
                     <div className="position-fixed bottom-0 end-0 mb-3 me-3">
-                        <button type="button" className="btn btn-primary" onClick={handleAddClick}><i class="bi bi-file-earmark-plus"></i></button>
+                        <button type="button" className="btn btn-primary" onClick={handleAddClick}><i className="bi bi-file-earmark-plus"></i></button>
                     </div>
                 </div>
             </div>
