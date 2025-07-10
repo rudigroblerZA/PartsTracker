@@ -68,6 +68,12 @@ public interface IPartsRepository
     Task<int> SaveChangesAsync();
 
     /// <summary>
+    /// Asynchronously saves all changes made in the context to the data store.
+    /// </summary>
+    /// <returns>The number of state entries written to the database.</returns>
+    Task<int> SaveChangesAsyncWaitAndRetryAsync();
+
+    /// <summary>
     /// Updates the specified part in the context.
     /// </summary>
     /// <param name="entity">The part entity with updated values.</param>

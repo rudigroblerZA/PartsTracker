@@ -25,7 +25,7 @@ services:
       - "0.0.0.0:8081:8081"
 
   postgres:    
-    image: postgres:15
+    image: postgres:16
     container_name: postgres
     restart: always
     environment:
@@ -33,7 +33,7 @@ services:
       POSTGRES_PASSWORD: supersecret
       POSTGRES_DB: InventoryDb
     ports:
-      - "5432:5432"
+      - "0.0.0.0:5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -41,6 +41,12 @@ services:
         interval: 10s
         timeout: 5s
         retries: 5
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "0.0.0.0:5000:8080"
 
 volumes:
   pgdata:

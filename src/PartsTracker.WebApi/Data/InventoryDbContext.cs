@@ -20,4 +20,16 @@ public class InventoryDbContext : DbContext
     public InventoryDbContext(DbContextOptions<InventoryDbContext> options) : base(options)
     {
     }
+
+    /// <summary>
+    /// Configure the model for the DbContext.
+    /// </summary>
+    /// <param name="modelBuilder">EF Model Builder</param>
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Part>()
+            .Property(p => p.xmin)
+            .IsRowVersion()
+            .HasColumnName("xmin");
+    }
 }
