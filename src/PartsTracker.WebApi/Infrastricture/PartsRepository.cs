@@ -76,6 +76,10 @@ public class PartsRepository : IPartsRepository
     public void Update(Part entity)
     {
         ValidatePart(entity);
+
+        _context.Entry(entity).Property("xmin").OriginalValue = entity.xmin;
+        _context.Entry(entity).State = EntityState.Modified;
+
         _context.Parts.Update(entity);
     }
 
