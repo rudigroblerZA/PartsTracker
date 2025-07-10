@@ -11,7 +11,7 @@ function App() {
     const [formData, setFormData] = useState({
         partNumber: '',
         description: '',
-        quantityOnHand: '',
+        quantityOnHand: 0,
         locationCode: '',
         lastStockTake: ''
     });
@@ -27,7 +27,7 @@ function App() {
             setFormData({
                 partNumber: modalPart.partNumber || '',
                 description: modalPart.description || '',
-                quantityOnHand: modalPart.quantityOnHand || '',
+                quantityOnHand: modalPart.quantityOnHand || 0,
                 locationCode: modalPart.locationCode || '',
                 lastStockTake: new Date(modalPart.lastStockTake).toISOString().split('T')[0] || new Date().toISOString().split('T')[0]
             });
@@ -35,12 +35,33 @@ function App() {
             setFormData({
                 partNumber: '',
                 description: '',
-                quantityOnHand: '',
+                quantityOnHand: 0,
                 locationCode: '',
                 lastStockTake: new Date().toISOString().split('T')[0]
             });
         }
     }, [showModal, modalMode, modalPart]);
+
+    const formatDate = (dateString) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+
+        let timeStr = date.toLocaleTimeString('en-ZA', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            second: undefined
+        });
+
+        let dateStr = date.toLocaleDateString('en-ZA', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
+
+        return dateStr + ' at ' + timeStr;
+
+    }
 
     const contents = loading
         ? <div className="d-flex justify-content-center align-items-center" style={{ minHeight: 200 }}>
@@ -52,9 +73,9 @@ function App() {
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Quantity</th>
+                        <th scope="col">Quantity on hand</th>
                         <th scope="col">Location</th>
-                        <th scope="col">Stock Take</th>
+                        <th scope="col">Last Stock Take</th>
                         <th scope="col">
                         </th>
                     </tr>
@@ -66,7 +87,7 @@ function App() {
                             <td>{part.description}</td>
                             <td>{part.quantityOnHand}</td>
                             <td>{part.locationCode}</td>
-                            <td>{part.lastStockTake}</td>
+                            <td>{formatDate(part.lastStockTake)}</td>
                             <td>
                                 <div className="btn-group btn-group-sm" role="group" aria-label="part_options_group">
                                     <button type="button" className="btn btn-primary" onClick={() => handleEditClick(part.partNumber)}><i className="bi bi-pen"></i></button>
@@ -116,22 +137,30 @@ function App() {
     }
 
     async function handleModalSave() {
+        const errors = [];
         if (!formData.partNumber.trim()) {
-            setFormError('Part Number is required.');
-            return;
+            errors.push('Part Number is required.');
         }
         if (!formData.description.trim()) {
-            setFormError('Description is required.');
-            return;
+            errors.push('Description is required.');
         }
         if (formData.quantityOnHand === '' || formData.quantityOnHand === null) {
-            setFormError('Quantity On Hand is required.');
+            errors.push('Quantity On Hand is required.');
+        } else if (isNaN(Number(formData.quantityOnHand))) {
+            errors.push('Quantity On Hand must be a number.');
+        }
+        if (errors.length > 0) {
+            setFormError(
+                <ul className="mb-0">
+                    {errors.map((err, i) => <li key={i}>{err}</li>)}
+                </ul>
+            );
             return;
         }
         setFormError('');
         let response;
+        let now = new Date();
         if (modalMode === 'add') {
-            let now = new Date();
             response = await fetch(`${server_url}/api/parts`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -142,7 +171,6 @@ function App() {
                 })
             });
         } else if (modalMode === 'edit') {
-            let now = new Date();
             response = await fetch(`${server_url}/api/parts/${formData.partNumber}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -156,6 +184,10 @@ function App() {
         if (response?.ok) {
             setShowModal(false);
             await populatePartsData();
+        } else if (response?.status === 409) {
+            // Conflict (e.g. part already exists)
+            const data = await response.json().catch(() => ({}));
+            setFormError(data?.description || 'Conflict: Part already exists.');
         } else {
             setFormError('Failed to save changes.');
         }
@@ -178,20 +210,58 @@ function App() {
 
             <div className="form-group">
                 <label htmlFor="partNumber">Part Number:</label>
-                <input type="text" className="form-control" name="partNumber" value={formData.partNumber} onChange={handleFormChange} disabled={modalMode === 'edit'} />
+                <input
+                    type="text"
+                    className={`form-control${formData.partNumber.trim() === '' ? ' is-invalid' : ''}`}
+                    name="partNumber"
+                    value={formData.partNumber}
+                    onChange={handleFormChange}
+                    disabled={modalMode === 'edit'}
+                    required
+                />
+                {formData.partNumber.trim() === '' && (
+                    <div className="invalid-feedback">Part Number is required.</div>
+                )}
             </div>
             <div className="form-group">
                 <label htmlFor="description">Description:</label>
-                <input type="text" className="form-control" name="description" value={formData.description} onChange={handleFormChange} />                
+                <input
+                    type="text"
+                    className={`form-control${formData.description.trim() === '' ? ' is-invalid' : ''}`}
+                    name="description"
+                    value={formData.description}
+                    onChange={handleFormChange}
+                    required
+                />
+                {formData.description.trim() === '' && (
+                    <div className="invalid-feedback">Description is required.</div>
+                )}
             </div>
             <div className="form-group">
                 <label htmlFor="quantityOnHand">Quantity On Hand:</label>
-                <input type="number" className="form-control" name="quantityOnHand" value={formData.quantityOnHand} onChange={handleFormChange} />
+                <input
+                    type="number"
+                    className={`form-control${formData.quantityOnHand === '' || isNaN(Number(formData.quantityOnHand)) ? ' is-invalid' : ''}`}
+                    name="quantityOnHand"
+                    value={formData.quantityOnHand}
+                    onChange={handleFormChange}
+                    min="0"
+                    required
+                />
+                {(formData.quantityOnHand === '' || isNaN(Number(formData.quantityOnHand))) && (
+                    <div className="invalid-feedback">Quantity On Hand is required and must be a number.</div>
+                )}
             </div>
             <div className="form-group">
                 <label htmlFor="locationCode">Location:</label>
-                <input type="text" className="form-control" name="locationCode" value={formData.locationCode} onChange={handleFormChange} />                
-            </div>        
+                <input
+                    type="text"
+                    className="form-control"
+                    name="locationCode"
+                    value={formData.locationCode}
+                    onChange={handleFormChange}
+                />
+            </div>
         </form>
     );
 
@@ -206,7 +276,7 @@ function App() {
             <div className="row">
                 <div className="col-12">
                     <div className="position-fixed bottom-0 end-0 mb-3 me-3">
-                        <button type="button" className="btn btn-primary" onClick={handleAddClick}>Add</button>
+                        <button type="button" className="btn btn-primary" onClick={handleAddClick}><i class="bi bi-file-earmark-plus"></i></button>
                     </div>
                 </div>
             </div>
