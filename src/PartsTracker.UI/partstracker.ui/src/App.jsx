@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 
-//const server_url = 'http://localhost:8080';
-const server_url = 'http://localhost:5296';
+const server_url = 'http://localhost:8080';
 
 function App() {
     const [parts, setParts] = useState();
@@ -116,16 +115,6 @@ function App() {
         setFormData(prev => ({ ...prev, [name]: value }));
     }
 
-    function handleFormClear() {
-        setFormData({
-            partNumber: '',
-            description: '',
-            quantityOnHand: '',
-            locationCode: '',
-        });
-        setFormError('');
-    }
-
     async function handleModalSave() {
         if (!formData.partNumber.trim()) {
             setFormError('Part Number is required.');
@@ -222,7 +211,7 @@ function App() {
                 </div>
             </div>
             {showModal && (
-                <div className="modal show d-block" tabindex="-1">
+                <div className="modal show d-block" tabIndex="-1">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -234,7 +223,7 @@ function App() {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" onClick={handleModalClose}>Close</button>
-                                <button type="button" className="btn btn-primary" onClick={handleModalSave}>Save changes</button>
+                                <button type="button" className="btn btn-primary" onClick={handleModalSave} disabled={!isFormValid()}>Save</button>
                             </div>
                         </div>
                     </div>
