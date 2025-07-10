@@ -29,7 +29,7 @@ function App() {
                 description: modalPart.description || '',
                 quantityOnHand: modalPart.quantityOnHand || 0,
                 locationCode: modalPart.locationCode || '',
-                lastStockTake: new Date(modalPart.lastStockTake).toISOString().split('T')[0] || new Date().toISOString().split('T')[0]
+                lastStockTake: formatDate(modalPart.lastStockTake)
             });
         } else if (showModal && modalMode === 'add') {
             setFormData({
@@ -37,7 +37,7 @@ function App() {
                 description: '',
                 quantityOnHand: 0,
                 locationCode: '',
-                lastStockTake: new Date().toISOString().split('T')[0]
+                lastStockTake: formatDate(new Date().toISOString())
             });
         }
     }, [showModal, modalMode, modalPart]);
@@ -187,9 +187,16 @@ function App() {
         } else if (response?.status === 409) {
             // Conflict (e.g. part already exists)
             const data = await response.json().catch(() => ({}));
-            setFormError(data?.description || 'Conflict: Part already exists.');
+            setFormError(data?.description || 'Part already exists.');
         } else {
-            setFormError('Failed to save changes.');
+            const data = await response.json().catch(() => ({}));
+            if (data && data.errors) {
+                Object.keys(data.errors).forEach(key => {
+                    setFormError(prev => `${prev} - ${data.errors[key]}`);
+                });
+            } else {
+                setFormError('Failed to save changes.');
+            }
         }
     }
 
@@ -260,6 +267,16 @@ function App() {
                     name="locationCode"
                     value={formData.locationCode}
                     onChange={handleFormChange}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="lastStockTake">Last Stock Take:</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    name="locationCode"
+                    value={formData.lastStockTake}
+                    disabled
                 />
             </div>
         </form>
