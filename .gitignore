@@ -26,6 +26,9 @@ bld/
 .vs
 .sonarqube
 
+infrastructure/.terraform/
+infrastructure/.terraform/.terraform.lock.hcl
+
 # .NET Core
 project.lock.json
 project.fragment.lock.json
