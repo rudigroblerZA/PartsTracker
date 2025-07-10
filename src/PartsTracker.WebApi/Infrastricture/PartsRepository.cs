@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PartsTracker.Server.Data;
 using PartsTracker.WebApi.Models;
+using Polly;
 using System.Linq.Expressions;
 
 namespace PartsTracker.WebApi.Infrastricture;
@@ -114,4 +115,16 @@ public class PartsRepository : IPartsRepository
     /// </summary>
     /// <returns>The number of state entries written to the database.</returns>
     public async Task<int> SaveChangesAsync() => await _context.SaveChangesAsync();
+
+    /// <summary>
+    /// Persists all changes made in the context to the database.
+    /// </summary>
+    /// <returns>The number of state entries written to the database.</returns>
+    public async Task<int> SaveChangesAsyncWaitAndRetryAsync()
+    {
+        var policy = Policy
+            .Handle<DbUpdateException>()
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromMilliseconds(200));
+        return await policy.ExecuteAsync(() => _context.SaveChangesAsync());
+    }
 }
