@@ -21,7 +21,6 @@ resource "aws_db_instance" "postgres" {
   engine               = "postgres"
   engine_version       = "15"
   instance_class       = "db.t3.micro"
-  name                 = "InventoryDb"
   username             = "partsuser"
   password             = "supersecret"
   skip_final_snapshot  = true
@@ -42,8 +41,8 @@ resource "aws_ecs_task_definition" "api_task" {
 
   container_definitions = jsonencode([
     {
-      name      = "partstracker.ui"
-      image     = "rudigrobler/partstracker.ui:latest"
+      name  = "partstracker.ui"
+      image = "rudigrobler/partstracker.ui:latest"
       portMappings = [
         {
           containerPort = 8081
@@ -51,8 +50,8 @@ resource "aws_ecs_task_definition" "api_task" {
       ]
     },
     {
-      name      = "partstracker.webapi"
-      image     = "rudigrobler/partstracker.webapi:latest"
+      name  = "partstracker.webapi"
+      image = "rudigrobler/partstracker.webapi:latest"
       portMappings = [
         {
           containerPort = 8080
@@ -75,7 +74,7 @@ resource "aws_ecs_service" "api_service" {
   desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
-    subnets         = [aws_subnet.public.id]
+    subnets          = [aws_subnet.public.id]
     assign_public_ip = true
   }
 }
